@@ -1,0 +1,38 @@
+body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .sticky-circle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  #language-options {
+    display: none;
+    position: absolute;
+    bottom: 40px;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  #language-options button {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    margin: 5px 0;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  #language-options button:hover {
+    background-color: #f0f0f0;
+  }
+  

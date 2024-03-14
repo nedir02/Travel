@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.db.models import Q, F
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView
 from django.views.decorators.cache import cache_page
 from Tavel import settings
@@ -99,9 +99,10 @@ def view_tour(request, slug):
             if form.is_valid():
                 # Check if the user has already booked
                 selected_date = form.cleaned_data['date']
-                bookings_count = Booking.objects.filter(date=selected_date).count()
+                how_many_people = form.cleaned_data['people']
+                bookings_count = tour.brons + how_many_people
                 user_bookings = Booking.objects.filter(user=request.user, date=selected_date)
-                if user_bookings.exists() or tour_people <= bookings_count:
+                if user_bookings.exists() or tour_people < bookings_count:
                     # Redirect or display a message indicating the user has already booked
                     messages.error(request, _("You have already booked or people count limited"))
                 else:
@@ -109,6 +110,8 @@ def view_tour(request, slug):
                     booking = form.save(commit=False)
                     booking.user = request.user
                     booking.tour = tour
+                    tour.brons += how_many_people
+                    tour.save()
                     booking.save()
                     messages.success(request, _("You booked successfully!"))
         else:
@@ -232,3 +235,36 @@ def weekly_weather_forecast(request, city):
 def weekly_forecast(request):
     return render(request, 'core/forecast_list.html')
 
+
+def interesting_places(request, slug):
+    int = Interest_Places.objects.get(slug=slug)
+    return render(request, 'core/view_interesting.html', {'int': int})
+
+
+def list_user_bookings(request):
+    user_bookings = Booking.objects.filter(user=request.user)
+    return render(request, 'core/booking_list.html', {'user_bookings': user_bookings})
+
+
+def update_user_booking(request, booking_id):
+    booking = get_object_or_404(Booking, pk=booking_id, user=request.user)
+
+    if request.method == 'POST':
+        form = BookingForm(request.POST, instance=booking)
+        if form.is_valid():
+            form.save()
+            return redirect('list_user_bookings')
+    else:
+        form = BookingForm(instance=booking)
+
+    return render(request, 'core/booking_update.html', {'form': form, 'booking': booking})
+
+
+def delete_user_booking(request, booking_id):
+    booking = get_object_or_404(Booking, pk=booking_id, user=request.user)
+
+    if request.method == 'POST':
+        booking.delete()
+        return redirect('list_user_bookings')
+
+    return render(request, 'core/booking_delete.html', {'booking': booking})

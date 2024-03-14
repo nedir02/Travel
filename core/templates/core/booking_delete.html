@@ -1,0 +1,27 @@
+<!-- booking_delete.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container" style="margin-top: 300px">
+        <div class="card mx-auto" style="max-width: 400px;">
+            <div class="card-body text-center">
+                <h2 class="card-title mb-4">Delete</h2>
+                <p class="card-text mb-4">Are you sure you want to delete <strong>{{ booking }}</strong>?</p>
+                <form method="post" action="">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger mr-2">Yes, delete</button>
+                    <a href="{% url 'list_user_bookings' %}" class="btn btn-secondary">No, go back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br><br><br>
+    <div class="call-to-action">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

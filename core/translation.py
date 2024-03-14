@@ -11,7 +11,7 @@ translator.register(TourPlan, TourPlanTranslationOptions)
 
 
 class PlacesTranslationOptions(TranslationOptions):
-    fields = ('title', 'inf_content')
+    fields = ('title', 'inf_content', 'excluded', 'included')
 
 
 translator.register(Places, PlacesTranslationOptions)
@@ -43,3 +43,17 @@ class Explore_MoreTranslationOptions(TranslationOptions):
 
 
 translator.register(Explore_More, Explore_MoreTranslationOptions)
+
+
+class IntPlacesTranslationOptions(TranslationOptions):
+    fields = ('title', 'content')
+
+
+translator.register(Interest_Places, IntPlacesTranslationOptions)
+
+
+class ItenaryTranslationOptions(TranslationOptions):
+    fields = ('name', )
+
+
+translator.register(Itenary, ItenaryTranslationOptions)

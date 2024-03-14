@@ -8,11 +8,13 @@ from django.utils.translation import gettext_lazy as _
 
 
 class BookingForm(forms.ModelForm):
-    date = forms.DateField(widget=forms.DateInput(attrs={'class': 'date', 'type': 'date'}))
+    date = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control', 'type': 'date', 'id': 'date'}))
+    people = forms.IntegerField(label=_("People"), widget=forms.NumberInput(attrs={'class': 'form-control', 'type': 'number', 'id': 'people'}))
+    foods = forms.ChoiceField(label=_("Foods"), choices=Booking.Foods, widget=forms.Select(attrs={'class': 'form-select', 'id': 'foods'}))
 
     class Meta:
         model = Booking
-        fields = ['date']
+        fields = ['date', 'people', 'foods']
 
 
 class UserRegisterForm(UserCreationForm):

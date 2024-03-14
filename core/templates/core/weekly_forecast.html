@@ -1,24 +1,117 @@
 {% extends 'base.html' %}
 {% load i18n %}
 {% block title %}{{ forecast_data.city.name }}{% endblock %}
+{% block style %}
+{% endblock %}
 {% block content %}
-    <div class="container mt-4" style="padding: 150px">
-    <h2 class="mb-4">{% trans 'Weekly Weather Forecast for' %} {{ forecast_data.city.name }}</h2>
-
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-    {% for entry in forecast_data.list %}
-    <div class="col">
-        <div class="card shadow" style="background-color: #22b3c1">
-            <div class="card-body">
-                <h5 class="card-title">{% trans 'Date:' %} {{ entry.dt_txt }}</h5>
-                <p class="card-text" style="color: aliceblue">{% trans 'Temperature:' %} {{ entry.main.temp }} &deg;C</p>
-                <p class="card-text" style="color: aliceblue">{% trans 'Sky:' %} {{ entry.weather.0.description }}</p>
-            </div>
+<div class="amazing-deals">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+          <div class="section-heading text-center">
+            <h2>{% trans 'Weekly Weather Forecast for' %} {{ forecast_data.city.name }}</h2>
+          </div>
         </div>
+        {% for entry in forecast_data.list %}
+        <div class="col-lg-6 col-sm-6">
+          <div class="item">
+            <div class="row">
+              <div class="col-lg-6">
+                  <div class="image" style="font-size: 70px; padding: 90px">
+                      {% if entry.weather.0.description == 'overcast clouds'  %}
+{#                            <img src="{% static 'weather/1-sunny.bpng' %}" class="fa fa-cloud">#}
+                            <i class="fa fa-cloud"></i>
+                        {% endif %}
+                        {% if entry.weather.0.description == 'light rain'  %}
+{#                            <img src="{% static 'weather/1-sunny.bpng' %}" class="fa fa-cloud">#}
+                            <i class="fa fa-cloud-rain"></i>
+                        {% endif %}
+                        {% if entry.weather.0.description == 'light intensity shower rain'  %}
+{#                            <img src="{% static 'weather/1-sunny.bpng' %}" class="fa fa-cloud">#}
+                            <i class="fa fa-cloud-rain"></i>
+                        {% endif %}
+                         {% if entry.weather.0.description == 'clear sky'  %}
+{#                            <img src="{% static 'weather/1-sunny.bpng' %}" class="fa fa-cloud">#}
+                            <i class="fas fa-sun"></i>
+                        {% endif %}
+                        {% if entry.weather.0.description == 'few clouds'  %}
+{#                            <img src="{% static 'weather/1-sunny.bpng' %}" class="fa fa-cloud">#}
+                            <i class="fa fa-cloud-sun"></i>
+                        {% endif %}
+                        {% if entry.weather.0.description == 'scattered clouds'  %}
+{#                            <img src="{% static 'weather/1-sunny.bpng' %}" class="fa fa-cloud">#}
+                            <i class="fa fa-cloud-sun"></i>
+                        {% endif %}
+                        {% if entry.weather.0.description == 'broken clouds'  %}
+{#                            <img src="{% static 'weather/1-sunny.bpng' %}" class="fa fa-cloud">#}
+                            <i class="fa fa-cloud"></i>
+                        {% endif %}
+                        {% if entry.weather.0.description == 'mist' %}
+{#                            <img src="{% static 'weather/1-sunny.bpng' %}" class="fa fa-cloud">#}
+                            <i class="fas fa-cloud"></i>
+                        {% endif %}
+                        {% if entry.weather.0.description == 'smoke' %}
+{#                            <img src="{% static 'weather/1-sunny.bpng' %}" class="fa fa-cloud">#}
+                            <i class="fa fa-cloud"></i>
+                        {% endif %}
+                        {% if entry.weather.0.description == 'haze' %}
+{#                            <img src="{% static 'weather/1-sunny.bpng' %}" class="fa fa-cloud">#}
+                            <i class="fa fa-cloud"></i>
+                        {% endif %}
+                        {% if entry.weather.0.description == 'dust or sand' %}
+{#                            <img src="{% static 'weather/1-sunny.bpng' %}" class="fa fa-cloud">#}
+                            <i class="fa fa-sun"></i>
+                        {% endif %}
+                        {% if entry.weather.0.description == 'fog' %}
+{#                            <img src="{% static 'weather/1-sunny.bpng' %}" class="fa fa-cloud">#}
+                            <i class="fa fa-cloud"></i>
+                        {% endif %}
+                        {% if entry.weather.0.description == 'freezing fog' %}
+{#                            <img src="{% static 'weather/1-sunny.bpng' %}" class="fa fa-cloud">#}
+                            <i class="fa fa-sun"></i>
+                        {% endif %}
+                        {% if entry.weather.0.description == 'snow' %}
+{#                            <img src="{% static 'weather/1-sunny.bpng' %}" class="fa fa-cloud">#}
+                            <i class="fa fa-snowflake"></i>
+                        {% endif %}
+                        {% if entry.weather.0.description == 'sleet' %}
+{#                            <img src="{% static 'weather/1-sunny.bpng' %}" class="fa fa-cloud">#}
+                            <i class="fa fa-cloud-rain"></i>
+                        {% endif %}
+                        {% if entry.weather.0.description == 'shower rain' %}
+{#                            <img src="{% static 'weather/1-sunny.bpng' %}" class="fa fa-cloud">#}
+                            <i class="fa fa-cloud-rain"></i>
+                        {% endif %}
+                        {% if entry.weather.0.description == 'rain' %}
+{#                            <img src="{% static 'weather/1-sunny.bpng' %}" class="fa fa-cloud">#}
+                            <i class="fa fa-cloud-rain"></i>
+                        {% endif %}
+                        {% if entry.weather.0.description == 'thunderstorm' %}
+{#                            <img src="{% static 'weather/1-sunny.bpng' %}" class="fa fa-cloud">#}
+                            <i class="fa fa-hat-wizard"></i>
+                        {% endif %}
+                        {% if entry.weather.0.description == 'tornado' %}
+{#                            <img src="{% static 'weather/1-sunny.bpng' %}" class="fa fa-cloud">#}
+                            <i class="fas fa-wind"></i>
+                        {% endif %}
+                  </div>
+              </div>
+              <div class="col-lg-6 align-self-center">
+                <div class="content">
+                  <h4>{% trans 'Date:' %} {{ entry.dt_txt }}</h4>
+                    <i class="fa fa-temperature-empty"></i> {% trans 'Temperature:' %} {{ entry.main.temp }}
+                  <div class="row">
+                    <div class="col-6">
+                    </div>
+                  </div>
+                  <p>{% trans 'Sky:' %} {{ entry.weather.0.description }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+          {% endfor %}
+      </div>
     </div>
-    {% endfor %}
-    </div>
-    </div>
-    <!-- Repeat for other days -->
-
+  </div>
 {% endblock %}

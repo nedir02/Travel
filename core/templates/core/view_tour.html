@@ -20,6 +20,16 @@
         <div class="row">
             <div class="col-lg-8">
                 <!-- Blog Post Content -->
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        {% for item in tour.itenary.all %}
+                        <li class="breadcrumb-item">{{ item.name }}</li>
+                        {% endfor %}
+                    </ol>
+                </nav>
+                <span><i class="fa fa-calendar"></i> Days during: {{ tour.tour_plan }}</span>&nbsp;
+                <span><i class="fa fa-user"></i> People: {{ tour.people }}</span>&nbsp;
+                <span><i class="fa fa-dollar"></i> Per/person: {{ tour.cost }}</span>&nbsp;
                 <h1 class="mt-4">{{ tour.title }}</h1>
                 <hr>
                 <img class="img-fluid rounded w-50" src="{{ tour.photo.url }}" alt="Sample Image">
@@ -30,56 +40,8 @@
         </div>
     </div>
 
-  <div class="reservation-form">
-    <div class="container">
-      <div class="row">
-            <div class="col-lg-12">
-          <form id="reservation-form" name="gs" method="post" role="search" action="{{ tour.get_absolute_url }}">
-            <div class="row">
-              <div class="col-lg-12">
-                <h4>{% trans 'Make Your' %} <em>{% trans 'Reservation' %}</em> {% trans 'Through This' %} <em>{% trans 'Form' %}</em></h4>
-              </div>
-              {% csrf_token %}
-              {{ form.as_p }}
-              <div class="col-lg-12">
-                  <fieldset>
-                      <button class="main-button">{% trans 'Make Your Reservation Now' %}</button>
-                  </fieldset>
-              </div>
-            </div>
-          </form>
-
-                <div class="container mt-4">
-                    <div class="row">
-                        {% for message in messages %}
-                            {% if message.tags == 'error' %}
-                            <div class="col-md-6">
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <strong>{% trans 'Error!' %}</strong> {{ message }}
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                            aria-label="Close"></button>
-                                </div>
-                            </div>
-                            {% else %}
-                            <div class="col-md-6">
-                                <!-- Success Message -->
-                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                                    <strong>{% trans 'Success!' %}</strong> {{ message }}
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                            aria-label="Close"></button>
-                                </div>
-                            </div>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-
-            </div>
-      </div>
-    </div>
-  </div>
-
-    <div class="accordion" id="myAccordion">
+<br><br>
+ <div class="accordion" id="myAccordion">
         {% if tour.tour_plan.content1 != '' %}
         <div class="accordion-item">
             <h2 class="accordion-header" id="section1Header">
@@ -194,6 +156,70 @@
         {% endif %}
 
     </div>
+<br><br>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="fs-4">{% trans 'Excluded' %}</p>
+                <p>{{ tour.excluded }}</p>
+            </div>
+            <div class="col-md-6">
+                <p class="fs-4">{% trans 'Included' %}</p>
+                <p>{{ tour.included }}</p>
+            </div>
+        </div>
+    </div>
+
+  <div class="reservation-form">
+    <div class="container">
+      <div class="row">
+            <div class="col-lg-12">
+          <form id="reservation-form" name="gs" method="post" role="search" action="{{ tour.get_absolute_url }}">
+            <div class="row">
+              <div class="col-lg-12">
+                <h4>{% trans 'Make Your' %} <em>{% trans 'Reservation' %}</em> {% trans 'Through This' %} <em>{% trans 'Form' %}</em></h4>
+              </div>
+              {% csrf_token %}
+              {{ form.as_p }}
+              <div class="col-lg-12">
+                  <fieldset>
+                      <button class="main-button">{% trans 'Make Your Reservation Now' %}</button>
+                  </fieldset>
+              </div>
+            </div>
+          </form>
+
+                <div class="container mt-4">
+                    <div class="row">
+                        {% for message in messages %}
+                            {% if message.tags == 'error' %}
+                            <div class="col-md-6">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>{% trans 'Error!' %}</strong> {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="col-md-6">
+                                <!-- Success Message -->
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                    <strong>{% trans 'Success!' %}</strong> {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+      </div>
+    </div>
+  </div>
+
+
 
   <div class="call-to-action">
     <div class="container">

@@ -22,7 +22,7 @@ class HotelsAdmin(admin.ModelAdmin):
 
 class PlacesAdmin(admin.ModelAdmin):
     list_display = ['title', 'tour_plan', 'cost']
-    list_display_links = ['title']
+    list_display_links = ['title', 'cost']
     search_fields = ['title', 'tour_plan']
     list_filter = ['tour_plan']
     prepopulated_fields = {'slug': ('title',)}
@@ -52,7 +52,7 @@ class BookingAdmin(admin.ModelAdmin):
     list_display_links = ['user']
     list_filter = ['date', 'tour']
     search_fields = ['date', 'tour']
-    readonly_fields = ['date']
+    readonly_fields = ['user', 'date', 'people', 'tour', 'foods']
 
 
 class FeedbackAdmin(admin.ModelAdmin):
@@ -63,6 +63,16 @@ class FeedbackAdmin(admin.ModelAdmin):
     readonly_fields = ['user', 'email', 'subject']
 
 
+class Interest_PlacesAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('title',)}
+    list_display = ['title']
+    list_display_links = ['title']
+
+
+class ItenaryAdmin(admin.ModelAdmin):
+    list_display = ['name']
+
+
 admin.site.register(Places, PlacesAdmin)
 admin.site.register(TourPlan)
 admin.site.register(TourBlog, TourBlogAdmin)
@@ -71,3 +81,5 @@ admin.site.register(Hotels, HotelsAdmin)
 admin.site.register(Booking, BookingAdmin)
 admin.site.register(Explore_More, Explore_MoreAdmin)
 admin.site.register(Feedback, FeedbackAdmin)
+admin.site.register(Interest_Places, Interest_PlacesAdmin)
+admin.site.register(Itenary, ItenaryAdmin)

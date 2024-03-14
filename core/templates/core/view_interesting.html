@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %}
-    Cities & Hotels
+    {% trans 'Cities & Hotels' %}
 {% endblock %}
 
 {% block style %}
@@ -78,15 +78,14 @@
         </div>
     </div>
 
-    <div class="about-main-content" style="background-image: url({{ city.main_photo.url }})">
+    <div class="about-main-content" style="background-image: url({{ int.main_photo.url }})">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="content">
                         <div class="blur-bg" style="background-color: rgba(0, 191, 255, 0.8)"></div>
-                        <h4></h4>
                         <div class="line-dec"></div>
-                        <h2>{{ city.name }}</h2>
+                        <h2>{{ int.title }}</h2>
                         <p>{% trans 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt uttersi labore et dolore magna aliqua is ipsum suspendisse ultrices gravida' %}</p>
                     </div>
                 </div>
@@ -99,11 +98,11 @@
         <div class="row">
             <div class="col-lg-8">
                 <!-- Blog Post Content -->
-                <h1 class="mt-4">{{ city.name }}</h1>
+                <h1 class="mt-4">{{ int.title }}</h1>
                 <hr>
-                <img class="img-fluid rounded w-50" src="{{ city.main_photo.url }}" alt="Sample Image">
+                <img class="img-fluid rounded w-50" src="{{ int.main_photo.url }}" alt="Sample Image">
                 <hr>
-                <p class="lead">{{ city.info }}</p>
+                <p class="lead">{{ int.content }}</p>
 
             </div>
         </div>
@@ -113,25 +112,18 @@
 <div class="border-container">
     <div class="slider-container">
         <div class="slider">
-            {% if city.img1 %}
-            <div class="slide"><img src="{{ city.img1.url }}" alt="Slide 1"></div>
+            {% if int.img1 %}
+            <div class="slide"><img src="{{ int.img1.url }}" alt="Slide 1"></div>
             {% endif %}
-            {% if city.img2 %}
-            <div class="slide"><img src="{{ city.img2.url }}" alt="Slide 2"></div>
+            {% if int.img2 %}
+            <div class="slide"><img src="{{ int.img2.url }}" alt="Slide 2"></div>
             {% endif %}
-            {% if city.img3 %}
-            <div class="slide"><img src="{{ city.img3.url }}" alt="Slide 3"></div>
+            {% if int.img3 %}
+            <div class="slide"><img src="{{ int.img3.url }}" alt="Slide 3"></div>
             {% endif %}
-            {% if city.img4 %}
-            <div class="slide"><img src="{{ city.img4.url }}" alt="Slide 4"></div>
+            {% if int.img4 %}
+            <div class="slide"><img src="{{ int.img4.url }}" alt="Slide 4"></div>
             {% endif %}
-            {% if city.img5 %}
-            <div class="slide"><img src="{{ city.img5.url }}" alt="Slide 5"></div>
-            {% endif %}
-            {% if city.img6 %}
-            <div class="slide"><img src="{{ city.img6.url }}" alt="Slide 5"></div>
-            {% endif %}
-
             <!-- Add more slides as needed -->
         </div>
         <div class="prev" onclick="prevSlide()">&#10094;</div>
@@ -139,26 +131,14 @@
     </div>
 </div>
 </center>
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-md-6" style="margin-top: 110px;">
-                <h2 style="color: black">{% trans 'Intersting places' %}</h2>
-                {% for item in city.interesting_places.all %}
-                    <ul class="list-group">
-                        <li class="list-group-item"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></li>
-                    </ul>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
     <div class="call-to-action">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
-                    <h2></h2>
-                    <h4></h4>
                 </div>
                 <div class="col-lg-4">
+                    <div class="border-button">
+                    </div>
                 </div>
             </div>
         </div>

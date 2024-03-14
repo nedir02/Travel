@@ -1,50 +1,64 @@
 {% load static %}
 {% load i18n %}
-<header class="header-area header-sticky" style="min-height: 100px;">
-    <div class="navbar1" style="background-color: #333;color: aliceblue;height: 30px;padding: 2px; display: flex; justify-content: space-between">
-        <div class="current-day">
-            <i class="fa fa-calendar">&nbsp;</i><span id="week-day"></span>&nbsp;<span id="date"></span>&nbsp;<span
-                id="month"></span>&nbsp;<span id="year2"></span>
-        </div>
-        {% include 'inc/languages.html' %}
-        {% if request.user.is_authenticated %}
-            <div class="greeting">
-                {% trans 'Welcome' %} {{ user.username }} | <a href="{% url 'logout' %}">{% trans 'Sign out' %}</a>
-            </div>
-        {% else %}
-            <div class="register-login">
-                <a href="{% url 'sign-up' %}">{% trans 'Sign up' %}</a> |
-                <a href="{% url 'sign-in' %}">{% trans 'Sign in' %}</a>
-            </div>
-        {% endif %}
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    <!-- ***** Logo Start ***** -->
-                    <a href="{% url 'home' %}" class="logo">
-                        <img src="{% static '/assets/images/hazar_travel.png' %}" alt="">
-                    </a>
-                    <!-- ***** Logo End ***** -->
-                    <!-- ***** Menu Start ***** -->
-                    <ul class="nav">
-                        <li><a href="{% url 'home' %}">{% trans 'Home' %}</a></li>
-                        <li><a href="{% url 'cities_hotels' %}">{% trans 'Cities & Hotels' %}</a></li>
-                        <li><a href="{% url 'tours' %}">{% trans 'Tours' %}</a></li>
-                        <li><a href="{% url 'explore_more' %}">{% trans 'Explore More' %}</a></li>
-                        <li><a href="{% url 'about' %}">{% trans 'About us' %}</a></li>
-                        <li><a href="{% url 'weekly_forecast' %}">{% trans 'Prediction' %}</a></li>
-                    </ul>
-                    <a class='menu-trigger'>
-                        <span>{% trans 'Menu' %}</span>
-                    </a>
-                    <!-- ***** Menu End ***** -->
-                </nav>
-            </div>
+{% include 'inc/languages.html' %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#" style="font-size: 13px"><i class="fa fa-calendar">&nbsp;</i><span
+                id="week-day"></span>&nbsp;<span id="date"></span>&nbsp;<span
+                id="month"></span>&nbsp;<span id="year2"></span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav2"
+                aria-controls="navbarNav2" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav2">
+            <ul class="navbar-nav ml-auto">
+                <!-- Add your social media icons here -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fab fa-facebook"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fab fa-twitter"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fab fa-instagram"></i></a>
+                </li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out"></i></a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'sign-up' %}"><i class="fas fa-user"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'sign-in' %}"><i class="fas fa-sign-out"></i></a>
+                    </li>
+                {% endif %}
+            </ul>
         </div>
     </div>
-</header>
+</nav>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="{% static '/assets/images/hazar_travel.png' %}" alt="" width='50'
+                                              height='50'></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav1"
+                aria-controls="navbarNav1" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav1">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">{% trans 'Home' %}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'cities_hotels' %}">{% trans 'Cities & Hotels' %}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'tours' %}">{% trans 'Tours' %}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'explore_more' %}">{% trans 'Explore More' %}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">{% trans 'About us' %}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'weekly_forecast' %}">{% trans 'Prognosis' %}</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
 <script>
     function updateDate() {

@@ -22,4 +22,8 @@ urlpatterns = [
     path('weather/<str:city>/', get_weather, name='get_weather'),
     path('weekly_forecast/<str:city>/', weekly_weather_forecast, name='weekly_weather_forecast'),
     path('weekly_forecast/', weekly_forecast, name='weekly_forecast'),
+    path('interesting_places/<str:slug>/', interesting_places, name='interesting_places'),
+    path('bookings/', list_user_bookings, name='list_user_bookings'),
+    path('booking/update/<int:booking_id>/', update_user_booking, name='update_user_booking'),
+    path('booking/delete/<int:booking_id>/', delete_user_booking, name='delete_user_booking'),
 ]

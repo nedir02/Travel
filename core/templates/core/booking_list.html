@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6" style="margin-top: 110px;">
+                <h2 style="color: black">{% trans 'Your Bookings' %}</h2>
+                <ul class="list-group">
+                    {% for booking in user_bookings %}
+                        <li class="list-group-item">
+                            {{ booking }}
+                            <div>
+                                <a href="{% url 'update_user_booking' booking.id %}"
+                                   class="btn btn-primary btn-sm me-2">{% trans 'Update' %}</a>
+                                <a href="{% url 'delete_user_booking' booking.id %}"
+                                   class="btn btn-danger btn-sm">{% trans 'Delete' %}</a>
+                            </div>
+                        </li>
+                    {% empty %}
+                        <img src="{% static 'assets/images/nothing.gif' %}" alt="gif"
+                             style="width: 200px; height: 150px; margin: 0 auto">
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <br><br><br><br><br>
+    <div class="call-to-action">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

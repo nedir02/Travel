@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 Velayats = (
     ('Mary', 'Mary'),
@@ -20,7 +21,6 @@ During_CHOICES = (
     (6, 6),
     (7, 7),
 )
-
 
 class TourPlan(models.Model):
     days_during = models.IntegerField(choices=During_CHOICES, verbose_name='Длительность')
@@ -49,13 +49,17 @@ class Places(models.Model):
     inf_content = models.TextField(verbose_name='Инфо про тур')
     photo = models.ImageField(upload_to='photos/%Y/%m/%d/', verbose_name='Фото')
     cost = models.IntegerField(default=0, verbose_name='Цена')
+    brons = models.IntegerField(default=0)
+    excluded = models.TextField()
+    included = models.TextField()
+    itenary = models.ManyToManyField('Itenary')
     slug = models.SlugField(verbose_name='url', help_text='Автозаполнение! Не трогать!')
 
     def get_absolute_url(self):
         return reverse('view_tour', kwargs={'slug': self.slug})
 
-    # def __str__(self):
-    #     return self.title
+    def __str__(self):
+        return self.title
 
     class Meta:
         verbose_name = 'Тур'
@@ -63,10 +67,11 @@ class Places(models.Model):
 
 
 class TourBlog(models.Model):
-    title = models.CharField(max_length=255,verbose_name='Названия блога')
+    title = models.CharField(max_length=255, verbose_name='Названия блога')
     content = models.TextField(verbose_name='Контент блога')
     photo = models.ImageField(upload_to='photos/%Y/%m/%d/', verbose_name='Фото')
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации', help_text='Автозаполнение! Не трогать!')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата публикации',
+                                      help_text='Автозаполнение! Не трогать!')
     views = models.IntegerField(default=0, verbose_name='Просмотры', help_text='Автозаполнение! Не трогать!')
     slug = models.SlugField(verbose_name='url', help_text='Автозаполнение! Не трогать!')
 
@@ -81,11 +86,13 @@ class TourBlog(models.Model):
         verbose_name_plural = 'Блоги'
         ordering = ['-created_at']
 
+
 class Cities(models.Model):
     name = models.CharField(max_length=255, verbose_name='Название города')
     main_photo = models.ImageField(upload_to='photos/%Y/%m/%d/', verbose_name='Главная фото')
     velayat = models.CharField(choices=Velayats, max_length=45, verbose_name='Велаят')
     info = models.TextField(verbose_name='Инфо про город')
+    interesting_places = models.ManyToManyField('Interest_Places', verbose_name='интересные места')
     img1 = models.ImageField(upload_to='cities/%Y/%m/%d/', blank=True, verbose_name='Доп. фото')
     img2 = models.ImageField(upload_to='cities/%Y/%m/%d/', blank=True, verbose_name='Доп. фото')
     img3 = models.ImageField(upload_to='cities/%Y/%m/%d/', blank=True, verbose_name='Доп. фото')
@@ -107,7 +114,7 @@ class Cities(models.Model):
 
 class Hotels(models.Model):
     name = models.CharField(max_length=255, verbose_name='Название отелья')
-    city = models.ForeignKey(Cities, on_delete=models.PROTECT,verbose_name='Город')
+    city = models.ForeignKey(Cities, on_delete=models.PROTECT, verbose_name='Город')
     info = models.TextField(verbose_name='Инфо про отель')
     cost = models.IntegerField(default=0, verbose_name='Цена')
     build_in = models.DateField(verbose_name='Построина в')
@@ -133,9 +140,17 @@ class Hotels(models.Model):
 
 
 class Booking(models.Model):
+    Foods = (
+        (_("Chinese Food"), _("Chinese Food")),
+        (_('Vegetarian'), _('Vegetarian')),
+        (_('Muslim Food'), _('Muslim Food')),
+        (_("Other"), _("Other")),
+    )
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Ползователь')
     tour = models.ForeignKey(Places, on_delete=models.CASCADE, related_name='books', verbose_name='Брон')
     date = models.DateField(verbose_name='Дата')
+    people = models.IntegerField(default=0)
+    foods = models.CharField(choices=Foods, max_length=255, default="Other")
 
     def __str__(self):
         return f'{self.user.username} - {self.tour}'
@@ -173,3 +188,41 @@ class Feedback(models.Model):
         verbose_name = 'Отзыв'
         verbose_name_plural = 'Отзывы'
 
+
+class Interest_Places(models.Model):
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+    main_photo = models.ImageField(upload_to='interesting_places/%Y/%m/%d/', blank=True, verbose_name='фото')
+    img1 = models.ImageField(upload_to='hotels/%Y/%m/%d/', blank=True, verbose_name='Доп. фото')
+    img2 = models.ImageField(upload_to='hotels/%Y/%m/%d/', blank=True, verbose_name='Доп. фото')
+    img3 = models.ImageField(upload_to='hotels/%Y/%m/%d/', blank=True, verbose_name='Доп. фото')
+    img4 = models.ImageField(upload_to='hotels/%Y/%m/%d/', blank=True, verbose_name='Доп. фото')
+    slug = models.SlugField(unique=True, verbose_name='url', help_text='Автозаполнение! Не трогать!')
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('interesting_places', kwargs={'slug': self.slug})
+
+    class Meta:
+        verbose_name = 'Интересное место'
+        verbose_name_plural = 'Интересные места'
+
+
+class Itenary(models.Model):
+    name = models.CharField(max_length=255, verbose_name="Имя")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Череез какие места'
+        verbose_name_plural = 'Череез какие места'
+
+
+class DidYouKnow(models.Model):
+    content = models.TextField()
+
+    def __str__(self):
+        return self.content

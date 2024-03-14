@@ -1,0 +1,63 @@
+<!-- booking_update.html -->
+{% extends 'base.html' %}
+{% load i18n %}
+{% block style %}
+{% endblock %}
+{% block content %}
+<div class="reservation-form">
+    <div class="container">
+      <div class="row">
+            <div class="col-lg-12">
+          <form id="reservation-form" name="gs" method="post" role="search" action="{{ tour.get_absolute_url }}">
+            <div class="row">
+              <div class="col-lg-12">
+                <h4>Edit your book</h4>
+              </div>
+              {% csrf_token %}
+              {{ form.as_p }}
+              <div class="col-lg-12">
+                  <fieldset>
+                      <button class="main-button">Edit</button>
+                  </fieldset>
+              </div>
+            </div>
+          </form>
+
+                <div class="container mt-4">
+                    <div class="row">
+                        {% for message in messages %}
+                            {% if message.tags == 'error' %}
+                            <div class="col-md-6">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <strong>{% trans 'Error!' %}</strong> {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="col-md-6">
+                                <!-- Success Message -->
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                    <strong>{% trans 'Success!' %}</strong> {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+            </div>
+      </div>
+    </div>
+  </div>
+    <div class="call-to-action">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
